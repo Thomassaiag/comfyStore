@@ -1,6 +1,6 @@
 import React from "react";
 import { FormInput, SubmitBtn } from "../components";
-import { Form, Link } from "react-router-dom";
+import { Form, Link, useNavigation } from "react-router-dom";
 
 const inputFields = [
 	{
@@ -33,6 +33,11 @@ const buttons = [
 ];
 
 const Login = () => {
+
+    const navigation=useNavigation()
+
+    const isSubmitting=navigation.state==='submitting'
+
 	return (
 		<div className="grid place-items-center min-h-[100vh]">
 			<h1>Login</h1>
@@ -42,7 +47,7 @@ const Login = () => {
 				})}
 				<div className="grid">
 					{buttons.map((button) => {
-						return <SubmitBtn key={button.id} {...button} />;
+						return <SubmitBtn key={button.id} {...button} isSubmitting={isSubmitting}/>;
 					})}
 				</div>
 			</Form>
