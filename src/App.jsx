@@ -37,10 +37,6 @@ const router = createBrowserRouter([
 				element: <Checkout />,
 			},
 			{
-				path: "login",
-				element: <Login />,
-			},
-			{
 				path: "orders",
 				element: <Orders />,
 			},
@@ -49,14 +45,20 @@ const router = createBrowserRouter([
 				element: <Products />,
 			},
 			{
-				path: "register",
-				element: <Register />,
-			},
-			{
-				path: "singleProduct",
+				path: "products/:id",
 				element: <SingleProduct />,
 			},
 		],
+	},
+	{
+		path: "/login",
+		element: <Login />,
+		errorElement: <Error />,
+	},
+	{
+		path: "/register",
+		element: <Register />,
+		errorElement: <Error />,
 	},
 ]);
 
