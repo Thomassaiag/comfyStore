@@ -1,2 +1,8 @@
 @import "tailwindcss";
 @plugin "daisyui";
+
+@layer components {
+	.align-item {
+		@apply mx-auto max-w-6xl px-8;
+	}
+}

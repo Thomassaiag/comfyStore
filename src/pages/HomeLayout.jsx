@@ -6,9 +6,11 @@ const HomeLayout = () => {
 	return (
 		<>
 			<nav className="">
-                <span className="text-4xl text-primary">Comfy</span>
-            </nav>
-			<Outlet />
+				<span className="text-4xl text-primary">Comfy</span>
+			</nav>
+			<section className="align-item py-20">
+				<Outlet />
+			</section>
 		</>
 	);
 };

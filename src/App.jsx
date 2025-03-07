@@ -14,6 +14,9 @@ import {
 
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
+import {action as loginAction} from './pages/Login'
+import { action as registerAction } from "./pages/Register";
+
 const router = createBrowserRouter([
 	{
 		path: "/",
@@ -53,11 +56,13 @@ const router = createBrowserRouter([
 	{
 		path: "/login",
 		element: <Login />,
+        action: loginAction,
 		errorElement: <Error />,
 	},
 	{
 		path: "/register",
 		element: <Register />,
+        action: registerAction,
 		errorElement: <Error />,
 	},
 ]);
