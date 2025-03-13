@@ -1,9 +1,18 @@
-import React from 'react'
+import React, { useEffect } from "react";
+
+import customFetch from "../utils";
 
 const Products = () => {
-  return (
-    <div>Products</div>
-  )
-}
+	const getAllProducts = async () => {
+		const { data } = await customFetch("/products");
+		console.log(data);
+	};
 
-export default Products
+	useEffect(() => {
+		getAllProducts();
+	}, []);
+
+	return <>Products</>;
+};
+
+export default Products;
