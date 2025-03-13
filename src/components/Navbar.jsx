@@ -1,11 +1,37 @@
-import React from "react";
-import { BsMoonFill, BsCart3 } from "react-icons/bs";
+import {React, useEffect, useState} from "react";
+import { BsMoonFill, BsSunFill, BsCart3 } from "react-icons/bs";
 import { NavLink } from "react-router";
 
 import { FaBarsStaggered } from "react-icons/fa6";
 import NavLinks from "./NavLinks";
 
+
+const themes={
+    winter: 'winter',
+    dracula: 'dracula'
+}
+
+const getLocalStorageTheme=()=>{
+    return localStorage.getItem('theme')|| themes.winter
+}
+
 const Navbar = () => {
+
+    const [theme, setTheme] = useState(getLocalStorageTheme());
+
+    const handleTheme=()=>{
+        const {winter, dracula}=themes
+        const newTheme= theme ===winter ? dracula : winter
+        setTheme(newTheme)
+    }
+    
+    
+    useEffect(()=>{
+        localStorage.setItem('theme',theme)
+        document.documentElement.setAttribute('data-theme',theme)
+    },[theme])
+
+
 	return (
 		<nav className="bg-base-200">
 			<div className="navbar align-item ">
@@ -23,10 +49,7 @@ const Navbar = () => {
 						</ul>
 					</div>
 					<div className="dropdown ">
-						<label
-							tabIndex={0}
-							className="btn btn-ghost lg:hidden"
-						>
+						<label tabIndex={0} className="btn btn-ghost lg:hidden">
 							<FaBarsStaggered className="h-6 w-6" />
 						</label>
 						<ul
@@ -38,9 +61,15 @@ const Navbar = () => {
 					</div>
 				</div>
 				<div className="navbar-end">
-					<button className="btn btn-ghost btn-circle">
-						<BsMoonFill className="h-6 w-6" />
-					</button>
+					<label className="swap swap-rotate">
+						<input type="checkbox" onChange={handleTheme}/>
+						
+							<BsSunFill className="swap-on h-4 w-4" />
+							<BsMoonFill className="swap-off h-4 w-4" />
+						
+						
+						
+					</label>
 					<NavLink
 						to="/cart"
 						className="btn btn-ghost btn-circle btn-md ml-4 indicator"
