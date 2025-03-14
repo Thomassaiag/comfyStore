@@ -16,15 +16,12 @@ import { ErrorElement } from "./components";
 
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
-
 //loaders
-import {loader as landingLoader} from './pages/Landing'
-
+import { loader as landingLoader } from "./pages/Landing";
 
 //actions
-import {action as loginAction} from './pages/Login'
+import { action as loginAction } from "./pages/Login";
 import { action as registerAction } from "./pages/Register";
-
 
 const router = createBrowserRouter([
 	{
@@ -35,8 +32,8 @@ const router = createBrowserRouter([
 			{
 				index: true,
 				element: <Landing />,
-				loader: landingLoader, 
-			 	errorElement: <ErrorElement />,
+				loader: landingLoader,
+				errorElement: <ErrorElement />,
 			},
 			{
 				path: "about",

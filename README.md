@@ -1135,7 +1135,7 @@ export default Hero;
 ## Challenge (18) - Axios Custom Instance
 
 - explore api
-- [API DOCS](https://documenter.getpostman.com/view/18152321/2s9Xy5KpTi)
+- [API DOCS](https://documenter.getpostman  .com/view/18152321/2s9Xy5KpTi)
 - create utils/index.js
 - setup custom axios instance
 - figure out the base url
