@@ -2,7 +2,7 @@ import React from "react";
 import { FeaturedProducts, Hero } from "../components";
 
 
-import customFetch from "../utils";
+import customFetch from "../utils/index";
 import { useLoaderData } from "react-router";
 
 export const loader = async () => {

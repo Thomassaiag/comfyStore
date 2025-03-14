@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 
-import customFetch from "../utils";
+import customFetch from "../utils/index";
 
 const Products = () => {
 	const getAllProducts = async () => {
