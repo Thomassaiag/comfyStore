@@ -1,29 +1,25 @@
-import React, { useEffect } from "react";
+import React from "react";
 
 import customFetch from "../utils/index";
+import ProductsContainer from "../components/ProductsContainer";
+import Filters from "../components/Filters";
+import PaginationContainer from "../components/PaginationContainer";
 
-
-
-
-export const loader=async ()=>{
-    const response=await customFetch('/products')
-    const allProducts=response.data.data
-    console.log(allProducts);
-    return allProducts;
-}
-
+export const loader = async () => {
+	const response = await customFetch("/products");
+	const productData = response.data.data;
+	const metaData = response.data.meta;
+	return { productData, metaData };
+};
 
 const Products = () => {
-	const getAllProducts = async () => {
-		const { data } = await customFetch("/products");
-		console.log(data);
-	};
-
-	useEffect(() => {
-		getAllProducts();
-	}, []);
-
-	return <>Products</>;
+	return (
+		<>
+			<Filters />
+			<ProductsContainer />
+			<PaginationContainer />
+		</>
+	);
 };
 
 export default Products;
