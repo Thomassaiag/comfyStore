@@ -4,8 +4,8 @@ import { Form, Link, useLoaderData } from "react-router";
 import SubmitBtn from "./SubmitBtn";
 import FormSelect from "./FormSelect";
 
-
 import { sorting } from "../utils";
+import FormRange from "./FormRange";
 
 const handleSubmit = () => {
 	console.log("form submitted");
@@ -51,6 +51,8 @@ const Filters = () => {
 				defaultValue="a-z"
 				size="input-sm"
 			/>
+			{/* PRICE RANGE */}
+			<FormRange label="select price" name='price' size='range-sm'/>
 			{/* BUTTONS */}
 			<div className="flex gap-x-4">
 				<SubmitBtn

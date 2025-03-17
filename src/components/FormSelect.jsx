@@ -9,7 +9,7 @@ const FormSelect = ({ options, name, text, defaultValue, size }) => {
 			<select
 				id={name}
                 name={name}
-				className={`select select-bordered ${size}}`}
+				className={`select select-bordered ${size}`}
 				defaultValue={defaultValue}
 			>
 				{options.map((option) => {
