@@ -1,6 +1,6 @@
 import React from "react";
 
-const FormSelect = ({ options, name, text }) => {
+const FormSelect = ({ options, name, text, defaultValue, size }) => {
 	return (
 		<div className="form-control">
 			<label htmlFor={name} className="label">
@@ -8,8 +8,9 @@ const FormSelect = ({ options, name, text }) => {
 			</label>
 			<select
 				id={name}
-				className="input input-bordered input-sm"
-				defaultValue="all"
+                name={name}
+				className={`select select-bordered ${size}}`}
+				defaultValue={defaultValue}
 			>
 				{options.map((option) => {
 					return (

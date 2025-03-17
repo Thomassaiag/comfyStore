@@ -32,15 +32,25 @@ const Filters = () => {
 				options={categories}
 				name="category"
 				text="select category"
+				defaultValue="all"
+				size="select-sm"
 			/>
 			{/* COMPANY */}
 			<FormSelect
 				options={companies}
 				name="company"
 				text="select company"
+				defaultValue="all"
+				size="select-sm"
 			/>
-            {/* SORT */}
-            <FormSelect options={sorting} name='sorting' text='sort by'/>
+			{/* SORT */}
+			<FormSelect
+				options={sorting}
+				name="order"
+				text="sort by"
+				defaultValue="a-z"
+				size="input-sm"
+			/>
 			{/* BUTTONS */}
 			<div className="flex gap-x-4">
 				<SubmitBtn
