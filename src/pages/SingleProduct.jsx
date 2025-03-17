@@ -98,9 +98,9 @@ const SingleProduct = () => {
 						</select>
 					</div>
 					{/* CART */}
-					<div>
+					<div className='mt-10'>
 						<button
-							className="btn btn-secondary btn-mdmt-4 uppercase"
+							className="btn btn-secondary btn-md uppercase"
 							onClick={() => {
 								console.log("add to bag");
 							}}
