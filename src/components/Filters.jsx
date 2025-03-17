@@ -6,6 +6,7 @@ import FormSelect from "./FormSelect";
 
 import { sorting } from "../utils";
 import FormRange from "./FormRange";
+import FormCheckBox from "./FormCheckBox";
 
 const handleSubmit = () => {
 	console.log("form submitted");
@@ -53,6 +54,9 @@ const Filters = () => {
 			/>
 			{/* PRICE RANGE */}
 			<FormRange label="select price" name='price' size='range-sm'/>
+
+            {/* FREE SHIPPING */}
+            <FormCheckBox size='checkbox-sm' name='shipping' label='free shipping'/>
 			{/* BUTTONS */}
 			<div className="flex gap-x-4">
 				<SubmitBtn
@@ -60,7 +64,7 @@ const Filters = () => {
 					buttonClass="btn btn-primary btn-sm"
 					type="submit"
 				/>
-				<Link className="btn btn-accent btn-sm uppercase my-3">
+				<Link className="btn btn-accent btn-sm uppercase my-3" to="/products">
 					reset
 				</Link>
 			</div>
