@@ -10,8 +10,6 @@ import {formatPrice} from "../utils/index";
 const ProductsGrid = () => {
 
 const {productData}=useLoaderData()
-
-    console.log(productData)
 	return (
 		<div className="pt-12 grid gap-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
 			{productData.map((product) => {

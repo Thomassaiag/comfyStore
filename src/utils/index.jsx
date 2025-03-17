@@ -19,7 +19,6 @@ export const formatPrice = (price) => {
 	return dollarAmount;
 };
 
-
 export const generateAmountOptions = (number) => {
 	return Array.from({ length: number }, (_, index) => {
 		const amount = index + 1;
@@ -29,4 +28,6 @@ export const generateAmountOptions = (number) => {
 			</option>
 		);
 	});
-}; 
+};
+
+export const sorting = ["a-z", "z-a", "high", "low"];
