@@ -8,24 +8,20 @@ import { sorting } from "../utils";
 import FormRange from "./FormRange";
 import FormCheckBox from "./FormCheckBox";
 
-const handleSubmit = () => {
-	console.log("form submitted");
-};
 
 const Filters = () => {
-	const { metaData } = useLoaderData();
+	const { metaData, params } = useLoaderData();
 	const { companies, categories } = metaData;
+    const {search, category, company, order, price, shipping}=params
 	return (
-		<Form
-			className="bg-base-200 rounded-md px-8 py-4 grid gap-x-4 gap-y-8 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 items-center"
-			onSubmit={handleSubmit}
-		>
+		<Form className="bg-base-200 rounded-md px-8 py-4 grid gap-x-4 gap-y-8 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 items-center">
 			{/* SEARCH */}
 			<FormInput
 				label="Search Product"
 				type="search"
 				name="search"
 				size="input-sm"
+				defaultValue={search}
 			/>
 			{/* SELECT */}
 			{/* CATEGORY */}
@@ -33,7 +29,7 @@ const Filters = () => {
 				options={categories}
 				name="category"
 				text="select category"
-				defaultValue="all"
+				defaultValue={category || "all"}
 				size="select-sm"
 			/>
 			{/* COMPANY */}
@@ -41,7 +37,7 @@ const Filters = () => {
 				options={companies}
 				name="company"
 				text="select company"
-				defaultValue="all"
+				defaultValue={company || "all"}
 				size="select-sm"
 			/>
 			{/* SORT */}
@@ -49,14 +45,19 @@ const Filters = () => {
 				options={sorting}
 				name="order"
 				text="sort by"
-				defaultValue="a-z"
+				defaultValue={order || "a-z"}
 				size="input-sm"
 			/>
 			{/* PRICE RANGE */}
-			<FormRange label="select price" name='price' size='range-sm'/>
+			<FormRange label="select price" name="price" size="range-sm" price={price}/>
 
-            {/* FREE SHIPPING */}
-            <FormCheckBox size='checkbox-sm' name='shipping' label='free shipping'/>
+			{/* FREE SHIPPING */}
+			<FormCheckBox
+				size="checkbox-sm"
+				name="shipping"
+				label="free shipping"
+				defaultValue={shipping}
+			/>
 			{/* BUTTONS */}
 			<div className="flex gap-x-4">
 				<SubmitBtn
@@ -64,7 +65,10 @@ const Filters = () => {
 					buttonClass="btn btn-primary btn-sm"
 					type="submit"
 				/>
-				<Link className="btn btn-accent btn-sm uppercase my-3" to="/products">
+				<Link
+					className="btn btn-accent btn-sm uppercase my-3"
+					to="/products"
+				>
 					reset
 				</Link>
 			</div>

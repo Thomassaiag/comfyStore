@@ -1,8 +1,6 @@
-import { React, useState } from "react";
+import { React } from "react";
 
-const FormCheckBox = ({ label, size, name }) => {
-	const [isFreeShipping, setIsFreeShipping] = useState("off");
-
+const FormCheckBox = ({ label, size, name, defaultValue }) => {
 	return (
 		<div className="form-control flex flex-col items-center">
 			<label className="label cursor-pointer" htmlFor={name}>
@@ -12,13 +10,8 @@ const FormCheckBox = ({ label, size, name }) => {
 				id={name}
 				name={name}
 				type="checkbox"
-				value={isFreeShipping}
+				defaultChecked={defaultValue}
 				className={`checkbox checkbox-primary mt-4 ${size}`}
-				onChange={(e) => {
-					e.target.value === "off"
-						? setIsFreeShipping("on")
-						: setIsFreeShipping("off");
-				}}
 			/>
 		</div>
 	);
