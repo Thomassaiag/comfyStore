@@ -3,12 +3,12 @@ import { Link, useLoaderData } from "react-router-dom";
 import customFetch from "../utils";
 import { formatPrice, generateAmountOptions } from "../utils/index";
 import ColorSelector from "../components/ColorSelector";
+import { useDispatch } from "react-redux";
+import { addItem } from "../features/cart/cartSlice";
 
 export const loader = async ({ params }) => {
-	console.log(params);
 	try {
 		const response = await customFetch(`/products/${params.id}`);
-		console.log(response);
 		const singleProduct = response.data.data;
 		return { singleProduct };
 	} catch (error) {
@@ -21,11 +21,8 @@ for (let i = 2; i <= 20; i++) {
 	itemsToOrder.push(i);
 }
 
-
-
 const SingleProduct = () => {
 	const { singleProduct } = useLoaderData();
-	console.log(singleProduct);
 	const { title, description, company, image, price, colors } =
 		singleProduct.attributes;
 
@@ -34,7 +31,23 @@ const SingleProduct = () => {
 
 	const handleAmount = (e) => {
 		setAmount(e.target.value);
-		console.log(amount);
+	};
+
+	const dispatch = useDispatch();
+	const productToAdd = {
+		cartID: singleProduct.id + productColor,
+		productID: singleProduct.id,
+		image,
+		title,
+		price,
+		company,
+		productColor,
+		amount,
+	};
+
+	const addToCart = () => {
+		dispatch(addItem({ product: productToAdd }));
+
 	};
 
 	return (
@@ -98,11 +111,11 @@ const SingleProduct = () => {
 						</select>
 					</div>
 					{/* CART */}
-					<div className='mt-10'>
+					<div className="mt-10">
 						<button
 							className="btn btn-secondary btn-md uppercase"
 							onClick={() => {
-								console.log("add to bag");
+								addToCart();
 							}}
 						>
 							Add To bag
