@@ -30,4 +30,6 @@ export const generateAmountOptions = (number) => {
 	});
 };
 
+
+
 export const sorting = ["a-z", "z-a", "high", "low"];
