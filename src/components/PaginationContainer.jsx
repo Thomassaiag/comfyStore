@@ -1,8 +1,9 @@
 import React from 'react'
+import Pagination from './Pagination'
 
 const PaginationContainer = () => {
   return (
-    <div>PaginationContainer</div>
+    <div><Pagination/></div>
   )
 }
 
