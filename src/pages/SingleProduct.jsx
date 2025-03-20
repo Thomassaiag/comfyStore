@@ -34,6 +34,7 @@ const SingleProduct = () => {
 	};
 
 	const dispatch = useDispatch();
+    
 	const productToAdd = {
 		cartID: singleProduct.id + productColor,
 		productID: singleProduct.id,

@@ -51,7 +51,9 @@ const cartSlice = createSlice({
         },
 		editItem: (state, action) => {
             const {cartID,  amount}=action.payload
-            const item = state.cartItems.find((item)=>item.cartcartID===cartID)
+            console.log(cartID)
+            console.log(amount)
+            const item = state.cartItems.find((item)=>item.cartID===cartID)
             state.numItemsInCart+=amount-item.amount
             state.cartTotal = item.price*(amount-item.amount)
             cartSlice.caseReducers.calculateTotals(state)
