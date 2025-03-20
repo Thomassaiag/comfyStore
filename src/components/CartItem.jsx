@@ -1,12 +1,7 @@
 import { React, useState } from "react";
-import { generateAmountOptions } from "../utils";
+import { formatPrice, generateAmountOptions } from "../utils";
 import { useDispatch } from "react-redux";
-import {
-	addItem,
-	clearCart,
-	removeItem,
-	editItem,
-} from "../features/cart/cartSlice";
+import { addItem, removeItem, editItem } from "../features/cart/cartSlice";
 
 const CartItem = ({
 	cartID,
@@ -18,73 +13,70 @@ const CartItem = ({
 	company,
 	amount,
 }) => {
-
 	const dispatch = useDispatch();
 
-	const [updatedAmount, setUpdatedAmount] = useState(amount);
 
 	const handleAmount = (e) => {
-		setUpdatedAmount(amount +e.target.value);
-		console.log(updatedAmount);
-
-		const productToAdd = {
-			cartID: cartID,
-			productID: productID,
-			image,
-			title,
-			price,
-			company,
-			productColor,
-			amount: updatedAmount,
-		};
-        console.log()
-		dispatch(editItem({ cartID: cartID, amount: updatedAmount }));
-        dispatch(addItem({ product: productToAdd }));
+		dispatch(editItem({ cartID: cartID, amount: e.target.value }));
 	};
 
 	return (
-		<div className="card bg-base-100 w-96 ">
-			<figure>
-				<img
-					className="w-20 sm:w-40 h-auto object-cover rounded-lg"
-					src={image}
-					alt={title}
-				/>
-			</figure>
-			<div className="card-body">
-				<h2 className="card-title capitalize">{title}</h2>
-				<h3 className="text capitalize text-neutral-300">{company}</h3>
-				<div className="flex gap-x-4 justify-start">
-					<p>Color: </p>
+		<article
+			key={cartID}
+			className="mb-12 flex flex-col gap-y-4 sm:flex-row flex-wrap border-b border-base-300 pb-6 last:border-b-0"
+		>
+			<img
+				className="w-24 h-24 rounded-lg sm:w-32 sm:w-32 object-cover"
+				src={image}
+				alt={title}
+			/>
+
+			<div className="sm:ml-16 sm:w-48">
+				{/* INFO */}
+				<div>
+					<h3 className="font-medium capitalize">{title}</h3>
+					<h4 className="mt-2 text-sm capitalize text-neutral-content">
+						{company}
+					</h4>
+				</div>
+				{/* COLOR */}
+				<p className="mt-2 text-sm capitalize flex items-center gap-x-2">
+					color:
 					<span
-						className={`badge w-6 h-6 mr-2`}
+						className={`badge badge-sm`}
 						style={{ backgroundColor: productColor }}
 					></span>
-				</div>
-				<div>
-					<label htmlFor="amount">Amount: </label>
+				</p>
+			</div>
+			<div className="sm:ml-12">
+				{/* AMOUNT */}
+				<div className="form-control max-w-xs">
+					<label className="label  p-0" htmlFor="amount">
+						<span className="label-text">Amount:</span>
+					</label>
 					<select
+                    name="amount"
 						id="amount"
-						defaultValue={updatedAmount}
-						className="select"
+						value={amount}
+						className="mt-2 select select-base select-border select-xs"
 						onChange={handleAmount}
 					>
-						{generateAmountOptions(15)}
+						{generateAmountOptions(parseInt(amount)+5)}
 					</select>
 				</div>
-				<div className="card-actions justify-start">
-					<button
-						className="btn"
-						onClick={() => {
-							console.log(cartID);
-							dispatch(removeItem({ cartID: cartID }));
-						}}
-					>
-						Remove
-					</button>
-				</div>
+				<button
+					className="mt-2 link link-primary link-hover text-sm"
+					onClick={() => {
+						console.log(cartID);
+						dispatch(removeItem({ cartID: cartID }));
+					}}
+				>
+					Remove
+				</button>
 			</div>
-		</div>
+
+			<p className="sm:ml-auto font-medium">{formatPrice(price)}</p>
+		</article>
 	);
 };
 

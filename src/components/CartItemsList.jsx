@@ -6,10 +6,10 @@ const CartItemsList = () => {
 
 
     const {cartItems} = useSelector((store) => store.cart);
-	return (<div>{cartItems.map((cartItem)=>{
+	return (<>{cartItems.map((cartItem)=>{
 
         return <CartItem key={cartItem.cartID} {...cartItem}/>;
-    })} </div>);
+    })} </>);
 };
 
 export default CartItemsList;
