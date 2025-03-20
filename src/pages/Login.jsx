@@ -1,7 +1,10 @@
 import React from "react";
 import { FormInput, SubmitBtn } from "../components";
-import { Form, Link, useNavigation } from "react-router-dom";
-import axios from 'axios'
+import { Form, Link, useNavigation, redirect} from "react-router-dom";
+
+import customFetch from "../utils";
+import { toast } from "react-toastify";
+import { loginUser } from "../features/user/userSlice";
 
 const inputFields = [
 	{
@@ -35,14 +38,23 @@ const buttons = [
 	},
 ];
 
-export const action = async ({request}) => {
-    console.log(request)
-	const formData = await request.formData();
-    const data=Object.fromEntries(formData)
-    console.log(data)
+export const action = (store)=> async ({request}) => {console.log(store)
+    const formData=await request.formData()
+    const data = Object.fromEntries(formData);
 
-    const response=await axios.post("url", data)
-    console.log(response)
+    try {
+        const response=await customFetch.post('/auth/local',data)
+        toast.success('User logged Successfuly')
+        store.dispatch(loginUser(response.data))
+        return redirect('/')
+
+    } catch (error) {
+        console.log(error)
+        const errorMessage=error?.response?.data?.error?.message || 'Check your credentials'
+        toast.error(errorMessage)
+    }
+    
+    
     
 };
 
