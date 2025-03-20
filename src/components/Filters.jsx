@@ -8,13 +8,12 @@ import { sorting } from "../utils";
 import FormRange from "./FormRange";
 import FormCheckBox from "./FormCheckBox";
 
-
 const Filters = () => {
 	const { metaData, params } = useLoaderData();
 	const { companies, categories } = metaData;
-    const {search, category, company, order, price, shipping}=params
+	const { search, category, company, order, price, shipping } = params;
 	return (
-		<Form className="bg-base-200 rounded-md px-8 py-4 grid gap-x-4 gap-y-8 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 items-center">
+		<Form className="bg-base-200 rounded-md px-8 py-4 grid gap-x-4  gap-y-8 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 items-center">
 			{/* SEARCH */}
 			<FormInput
 				label="Search Product"
@@ -49,7 +48,12 @@ const Filters = () => {
 				size="input-sm"
 			/>
 			{/* PRICE RANGE */}
-			<FormRange label="select price" name="price" size="range-sm" price={price}/>
+			<FormRange
+				label="select price"
+				name="price"
+				size="range-sm"
+				price={price}
+			/>
 
 			{/* FREE SHIPPING */}
 			<FormCheckBox
@@ -59,19 +63,18 @@ const Filters = () => {
 				defaultValue={shipping}
 			/>
 			{/* BUTTONS */}
-			<div className="flex gap-x-4">
-				<SubmitBtn
-					buttonText="search"
-					buttonClass="btn btn-primary btn-sm"
-					type="submit"
-				/>
-				<Link
-					className="btn btn-accent btn-sm uppercase my-3"
-					to="/products"
-				>
-					reset
-				</Link>
-			</div>
+
+			<SubmitBtn
+				buttonText="search"
+				buttonClass="btn btn-primary btn-sm"
+				type="submit"
+			/>
+			<Link
+				className="btn btn-accent btn-sm uppercase my-3"
+				to="/products"
+			>
+				reset
+			</Link>
 		</Form>
 	);
 };

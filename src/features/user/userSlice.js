@@ -27,14 +27,16 @@ const userSlice = createSlice({
 			console.log("login");
 		},
 		logoutUser: (state) => {
-			console.log("logout");
+            state.user=null
+            localStorage.removeItem('user')
+            toast.success('Logged out successfully')
 		},
 		toggleTheme: (state) => {
             const {dracula, winter}=themes
 			console.log("toggle them");
 			state.theme = state.theme === dracula ? winter : dracula;
-			localStorage.setItem("theme", state.theme);
 			document.documentElement.setAttribute("data-theme", state.theme);
+			localStorage.setItem("theme", state.theme);
 		},
 	},
 });

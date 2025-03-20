@@ -1,6 +1,6 @@
 import React from "react";
 
-const FormInput = ({ label, type, defaultValue, name, size}) => {
+const FormInput = ({ label, type, defaultValue, name, size }) => {
 	return (
 		<div className="form-control ">
 			<label className="label">
