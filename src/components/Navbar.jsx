@@ -1,36 +1,21 @@
-import { React, useEffect, useState } from "react";
+import { React,  } from "react";
 import { BsMoonFill, BsSunFill, BsCart3 } from "react-icons/bs";
 import { NavLink } from "react-router";
 
 import { FaBarsStaggered } from "react-icons/fa6";
 import NavLinks from "./NavLinks";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { toggleTheme } from "../features/user/userSlice";
 
-const themes = {
-	winter: "winter",
-	dracula: "dracula",
-};
-
-const getLocalStorageTheme = () => {
-	return localStorage.getItem("theme") || themes.winter;
-};
 
 const Navbar = () => {
-	const [theme, setTheme] = useState(getLocalStorageTheme());
+	const dispatch = useDispatch();
 
 	const handleTheme = () => {
-		const { winter, dracula } = themes;
-		const newTheme = theme === winter ? dracula : winter;
-		setTheme(newTheme);
+		dispatch(toggleTheme());
 	};
 
-	useEffect(() => {
-		localStorage.setItem("theme", theme);
-		document.documentElement.setAttribute("data-theme", theme);
-	}, [theme]);
-
 	const { numItemsInCart } = useSelector((store) => store.cart);
-    
 
 	return (
 		<nav className="bg-base-200">
