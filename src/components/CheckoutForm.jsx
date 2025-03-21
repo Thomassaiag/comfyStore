@@ -57,11 +57,17 @@ export const action =
 			store.dispatch(clearCart());
 			toast.success("Order sent successfully");
 			console.log(response);
+
 			return redirect("/orders");
 		} catch (error) {
-			const errorMessage = error?.response?.data?.error?.message || 'there was an error placing your order'
+			const errorMessage =
+				error?.response?.data?.error?.message ||
+				"there was an error placing your order";
 			toast.error(errorMessage);
-            return null
+			if (error?.response?.status === 401) {
+				return redirect("/login");
+			}
+			return null;
 		}
 	};
 
