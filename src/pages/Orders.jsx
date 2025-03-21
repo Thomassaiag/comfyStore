@@ -1,9 +1,14 @@
 import React from "react";
-import { OrdersList, PaginationContainer, SectionTitle } from "../components";
+import {
+	OrdersList,
+	ComplexPaginationContainer,
+	SectionTitle,
+} from "../components";
 import { toast } from "react-toastify";
 
 import { redirect, useLoaderData } from "react-router";
 import customFetch from "../utils";
+
 
 
 export const loader =
@@ -17,19 +22,16 @@ export const loader =
 
 		const { token } = store.getState().user.user;
 
-		console.log(request.url);
-
 		const params = Object.fromEntries([
 			...new URL(request.url).searchParams.entries(),
 		]);
-		console.log(params);
+
 
 		try {
 			const response = await customFetch.get("/orders", {
 				params,
 				headers: { Authorization: `Bearer ${token}` },
 			});
-			console.log(response);
 
 			return { orders: response.data.data, metaData: response.data.meta };
 		} catch (error) {
@@ -53,7 +55,7 @@ const Orders = () => {
 		<>
         <SectionTitle title="Your orders" />
 			<OrdersList />
-            <PaginationContainer/>
+            <ComplexPaginationContainer/>
 		</>
 	);
 };
