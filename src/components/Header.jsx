@@ -6,8 +6,6 @@ import {clearCart} from '../features/cart/cartSlice'
 
 const Header = () => {
 	const { user } = useSelector((store) => store.user);
-	console.log(user);
-
 	const dispatch = useDispatch();
 
     const navigate=useNavigate()

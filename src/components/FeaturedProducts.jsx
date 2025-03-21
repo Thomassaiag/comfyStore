@@ -1,8 +1,8 @@
 import React from "react";
 import { ProductsGrid, SectionTitle } from "./index.js";
 
-const FeaturedProducts = ({ productData }) => {
-	console.log(productData);
+const FeaturedProducts = () => {
+
 	return (
 		<div className="pt-24">
 			<SectionTitle title="Featured Products" />

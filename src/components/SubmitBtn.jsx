@@ -8,7 +8,6 @@ const SubmitBtn = ({ buttonText, buttonClass, isSubmitting, buttonType }) => {
 			disabled={isSubmitting}
 			type={buttonType}
 		>
-			{/* {isSubmitting ? "Submitting" : { buttonText }} */}
 			{isSubmitting ? <>
                 <LoadingSpinner />Sending...
             </>

@@ -1,67 +1,81 @@
 import React from "react";
-import { FormInput, SubmitBtn } from "../components";
-import { Form, Link, useNavigation, redirect} from "react-router-dom";
+import { FormInput, SubmitBtn,LoadingSpinner } from "../components";
+import {
+	Form,
+	Link,
+	useNavigation,
+	redirect,
+	useNavigate,
+} from "react-router-dom";
 
 import customFetch from "../utils";
 import { toast } from "react-toastify";
 import { loginUser } from "../features/user/userSlice";
+import { useDispatch } from "react-redux";
+
 
 const inputFields = [
 	{
 		id: 1,
 		label: "email",
 		type: "email",
-		defaultValue: "test@test.com",
 		name: "identifier",
 	},
 	{
 		id: 2,
 		label: "password",
 		type: "password",
-		defaultValue: "secret",
 		name: "password",
 	},
 ];
 
-const buttons = [
-	{
-		id: 1,
-		buttonText: "login",
-		buttonClass: "btn btn-secondary",
-		buttonType: "submit",
-	},
-	{
-		id: 2,
-		buttonText: "guest user",
-		buttonClass: "btn btn-primary",
-		buttonType: "button",
-	},
-];
 
-export const action = (store)=> async ({request}) => {console.log(store)
-    const formData=await request.formData()
-    const data = Object.fromEntries(formData);
+export const action =
+	(store) =>
+	async ({ request }) => {
+		console.log(store);
+		const formData = await request.formData();
+		const data = Object.fromEntries(formData);
 
-    try {
-        const response=await customFetch.post('/auth/local',data)
-        toast.success('User logged Successfuly')
-        store.dispatch(loginUser(response.data))
-        return redirect('/')
-
-    } catch (error) {
-        console.log(error)
-        const errorMessage=error?.response?.data?.error?.message || 'Check your credentials'
-        toast.error(errorMessage)
-    }
-    
-    
-    
-};
+		try {
+			const response = await customFetch.post("/auth/local", data);
+			toast.success("User logged Successfuly");
+			store.dispatch(loginUser(response.data));
+			return redirect("/");
+		} catch (error) {
+			console.log(error);
+			const errorMessage =
+				error?.response?.data?.error?.message ||
+				"Check your credentials";
+			toast.error(errorMessage);
+		}
+	};
 
 const Login = () => {
 	const navigation = useNavigation();
 
 	const isSubmitting = navigation.state === "submitting";
+
+	const dispatch = useDispatch();
+	const navigate = useNavigate();
+
+	const loginAsGuestUser = async () => {
+		const authData = {
+			identifier: "test@test.com",
+			password: "secret",
+		};
+		try {
+			const response = await customFetch.post("/auth/local", authData);
+			console.log(response);
+			toast.success("User logged In Successfully");
+			dispatch(loginUser(response.data));
+			navigate("/");
+		} catch (error) {
+			const errorMessage =
+				error?.response?.data || "issue with credentials";
+			toast.error(errorMessage);
+		}
+	};
 
 	return (
 		<section className="grid place-items-center h-screen">
@@ -74,19 +88,35 @@ const Login = () => {
 					return <FormInput key={inputField.id} {...inputField} />;
 				})}
 				<div className="mt-4 grid">
-					{buttons.map((button) => {
-						return (
-							<SubmitBtn
-								key={button.id}
-								{...button}
-								isSubmitting={isSubmitting}
-							/>
-						);
-					})}
+					<SubmitBtn buttonText="login" buttonClass="btn btn-secondary" buttonType="submit" isSubmitting={isSubmitting} />
+				</div>
+				<div className="mt-4 grid">
+					<button
+						className="btn btn-primary uppercase my-3"
+						disabled={isSubmitting}
+						type="button"
+						onClick={loginAsGuestUser}
+					>
+						{/* {isSubmitting ? "Submitting" : { buttonText }} */}
+						{isSubmitting ? (
+							<>
+								<LoadingSpinner />
+								Sending...
+							</>
+						) : (
+							"guest user"
+						)}
+					</button>
 				</div>
 			</Form>
 			<p className="text-center">
-				Not a Member Yet ? <Link to="/register" className="ml-2 link link-hover link-primary capitalize">register</Link>
+				Not a Member Yet ?{" "}
+				<Link
+					to="/register"
+					className="ml-2 link link-hover link-primary capitalize"
+				>
+					register
+				</Link>
 			</p>
 		</section>
 	);
