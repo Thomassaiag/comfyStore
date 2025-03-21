@@ -7,6 +7,7 @@ import { formatPrice } from "../utils";
 import { toast } from "react-toastify";
 import { clearCart } from "../features/cart/cartSlice";
 
+
 const inputFields = [
 	{
 		id: 2,
@@ -64,7 +65,10 @@ export const action =
 				error?.response?.data?.error?.message ||
 				"there was an error placing your order";
 			toast.error(errorMessage);
-			if (error?.response?.status === 401) {
+			if (
+				error?.response?.status === 401 ||
+				error?.response?.status === 403
+			) {
 				return redirect("/login");
 			}
 			return null;
@@ -74,6 +78,8 @@ export const action =
 const CheckoutForm = () => {
 	const navigate = useNavigation();
 	const isSubmitting = navigate.state === "submitting";
+
+    
 
 	return (
 		<Form
