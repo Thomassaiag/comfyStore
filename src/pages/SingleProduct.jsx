@@ -5,12 +5,25 @@ import { formatPrice, generateAmountOptions } from "../utils/index";
 import ColorSelector from "../components/ColorSelector";
 import { useDispatch } from "react-redux";
 import { addItem } from "../features/cart/cartSlice";
+import { useQuery } from "@tanstack/react-query";
 
-export const loader = async ({ params }) => {
+
+const getSingleProduct=(id)=>{
+    return {
+    queryKey: ["singleProduct",id],
+    queryFn:async ()=>{
+        const {data} = await customFetch(`/products/${id}`);
+        return {data}
+    }
+}}
+
+export const loader = (queryClient)=>async ({ params }) => {
+    const {id}=params
 	try {
-		const response = await customFetch(`/products/${params.id}`);
-		const singleProduct = response.data.data;
-		return { singleProduct };
+        await queryClient.ensureQueryData(getSingleProduct(id))
+		// const response = await customFetch(`/products/${params.id}`);
+		// const singleProduct = response.data.data;
+		return { id }
 	} catch (error) {
 		console.log(error);
 	}
@@ -22,7 +35,11 @@ for (let i = 2; i <= 20; i++) {
 }
 
 const SingleProduct = () => {
-	const { singleProduct } = useLoaderData();
+	const { id } = useLoaderData();
+    const {data}=useQuery(getSingleProduct(id))
+
+    const singleProduct=data.data.data
+
 	const { title, description, company, image, price, colors } =
 		singleProduct.attributes;
 

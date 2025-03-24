@@ -1,24 +1,35 @@
 import React from "react";
 import { FeaturedProducts, Hero } from "../components";
 
-
 import customFetch from "../utils/index";
-import { useLoaderData } from "react-router";
 
-export const loader = async () => {
-	const response=await customFetch('/products',{params:{featured:true}}) 
-    const productData=response.data.data
-    return {productData}
+
+export const searchFeaturedProduct = () => {
+	return {
+		queryKey: ["featuredProduct"],
+		queryFn: async () => {
+			const { data } = await customFetch("/products", {
+				params: { featured: true },
+			});
+			console.log(data);
+			return { data };
+		},
+	};
+};
+
+export const loader = (queryClient) => async () => {
+	// const response=await customFetch('/products',{params:{featured:true}})
+	// const productData=response.data.data
+	await queryClient.ensureQueryData(searchFeaturedProduct());
+	// return {productData}
 };
 
 const Landing = () => {
 
-    const {productData}=useLoaderData()
-
 	return (
 		<>
 			<Hero />
-            <FeaturedProducts />
+			<FeaturedProducts />
 		</>
 	);
 };
