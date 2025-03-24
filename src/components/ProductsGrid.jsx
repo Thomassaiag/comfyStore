@@ -3,10 +3,6 @@ import React from "react";
 import {Link, useLoaderData} from 'react-router-dom'
 
 import {formatPrice} from "../utils/index";
-import { useQuery } from "@tanstack/react-query";
-import { searchFeaturedProduct } from "../pages/Landing";
-
-
 
 
 const ProductsGrid = () => {

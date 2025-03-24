@@ -9,10 +9,20 @@ import { toast } from "react-toastify";
 import { redirect, useLoaderData } from "react-router";
 import customFetch from "../utils";
 
-
+const ordersQuery = (params, token) => {
+	const { page } = params;
+	return {
+		queryKey: ["orders", page ? page : 1, token],
+		queryFn: () =>
+			customFetch.get("/orders", {
+				params,
+				headers: { Authorization: `Bearer ${token}` },
+			}),
+	};
+};
 
 export const loader =
-	(store) =>
+	(store, queryClient) =>
 	async ({ request }) => {
 		const user = store.getState().user.user;
 		if (!user) {
@@ -26,12 +36,10 @@ export const loader =
 			...new URL(request.url).searchParams.entries(),
 		]);
 
-
 		try {
-			const response = await customFetch.get("/orders", {
-				params,
-				headers: { Authorization: `Bearer ${token}` },
-			});
+			const response = await queryClient.ensureQueryData(
+				ordersQuery(params, token)
+			);
 
 			return { orders: response.data.data, metaData: response.data.meta };
 		} catch (error) {
@@ -47,15 +55,15 @@ export const loader =
 	};
 
 const Orders = () => {
-	const { metaData } = useLoaderData()
+	const { metaData } = useLoaderData();
 	if (metaData.pagination.total < 1) {
 		<SectionTitle title="Please Place an order" />;
 	}
 	return (
 		<>
-        <SectionTitle title="Your orders" />
+			<SectionTitle title="Your orders" />
 			<OrdersList />
-            <ComplexPaginationContainer/>
+			<ComplexPaginationContainer />
 		</>
 	);
 };

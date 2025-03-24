@@ -26,7 +26,7 @@ const inputFields = [
 ];
 
 export const action =
-	(store) =>
+	(store, queryClient) =>
 	async ({ request }) => {
 		const formData = await request.formData();
 
@@ -55,7 +55,9 @@ export const action =
 					},
 				}
 			);
+
 			store.dispatch(clearCart());
+            queryClient.removeQuery(["orders"]);
 			toast.success("Order sent successfully");
 			console.log(response);
 
