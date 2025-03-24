@@ -1,6 +1,6 @@
 import React from "react";
 
-import {Link} from 'react-router-dom'
+import {Link, useLoaderData} from 'react-router-dom'
 
 import {formatPrice} from "../utils/index";
 import { useQuery } from "@tanstack/react-query";
@@ -11,10 +11,9 @@ import { searchFeaturedProduct } from "../pages/Landing";
 
 const ProductsGrid = () => {
 
-// const {productData}=useLoaderData()
-const {data} = useQuery(searchFeaturedProduct());
-const productData=data.data.data
-console.log(productData);
+const {productData}=useLoaderData()
+// const {data} = useQuery(searchFeaturedProduct());
+// const productData=data.data.data
 	return (
 		<div className="pt-12 grid gap-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
 			{productData.map((product) => {

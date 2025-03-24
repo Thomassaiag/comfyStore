@@ -5,29 +5,28 @@ import { formatPrice, generateAmountOptions } from "../utils/index";
 import ColorSelector from "../components/ColorSelector";
 import { useDispatch } from "react-redux";
 import { addItem } from "../features/cart/cartSlice";
-import { useQuery } from "@tanstack/react-query";
 
-
-const getSingleProduct=(id)=>{
-    return {
-    queryKey: ["singleProduct",id],
-    queryFn:async ()=>{
-        const {data} = await customFetch(`/products/${id}`);
-        return {data}
-    }
-}}
-
-export const loader = (queryClient)=>async ({ params }) => {
-    const {id}=params
-	try {
-        await queryClient.ensureQueryData(getSingleProduct(id))
-		// const response = await customFetch(`/products/${params.id}`);
-		// const singleProduct = response.data.data;
-		return { id }
-	} catch (error) {
-		console.log(error);
-	}
+const getSingleProduct = (id) => {
+	return {
+		queryKey: ["singleProduct", id],
+		queryFn: () => customFetch(`/products/${id}`),
+	};
 };
+
+export const loader =
+	(queryClient) =>
+	async ({ params }) => {
+		const { id } = params;
+		try {
+			const response = await queryClient.ensureQueryData(
+				getSingleProduct(id)
+			);
+			const singleProduct = response.data.data;
+			return { id, singleProduct };
+		} catch (error) {
+			console.log(error);
+		}
+	};
 
 const itemsToOrder = [];
 for (let i = 2; i <= 20; i++) {
@@ -35,10 +34,8 @@ for (let i = 2; i <= 20; i++) {
 }
 
 const SingleProduct = () => {
-	const { id } = useLoaderData();
-    const {data}=useQuery(getSingleProduct(id))
+	const { singleProduct } = useLoaderData();
 
-    const singleProduct=data.data.data
 
 	const { title, description, company, image, price, colors } =
 		singleProduct.attributes;
@@ -51,7 +48,7 @@ const SingleProduct = () => {
 	};
 
 	const dispatch = useDispatch();
-    
+
 	const productToAdd = {
 		cartID: singleProduct.id + productColor,
 		productID: singleProduct.id,
@@ -65,7 +62,6 @@ const SingleProduct = () => {
 
 	const addToCart = () => {
 		dispatch(addItem({ product: productToAdd }));
-
 	};
 
 	return (
